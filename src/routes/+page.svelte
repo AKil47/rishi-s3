@@ -5,14 +5,18 @@
     import TestimonialCard from '$lib/components/TestimonialCard.svelte';
     import type { PageData } from './$types';
     import { subjectsInfo, subjectNames } from '$lib/subjects';
+    import Typed from 'typed.js';
 
     export let data: PageData;
 
-    let TypedJsComponent: any = null;
-
     onMount(async () => {
-        const module = await import('svelte-typed-js');
-        TypedJsComponent = module.default || module;
+        new Typed('#subjects', {
+            strings: subjectNames.map(str => ":" + str),
+            typeSpeed: 50,
+            showCursor: false,
+            smartBackspace: true,
+            loop: true
+        });
     });
 </script>
 
@@ -24,23 +28,10 @@
 
 <!-- Hero Section -->
 <section class="text-center py-16 md:py-24 border-b border-gray-200">
-    <h1 class="text-4xl md:text-6xl font-bold text-blue-900 mb-4">
-        <span class="block">Unlock Your Potential in</span>
-        {#if TypedJsComponent}
-            <svelte:component
-                this={TypedJsComponent}
-                strings={subjectNames}
-                loop={true}
-                typeSpeed={60}
-                backSpeed={30}
-                backDelay={1500}
-                >
-                <span class="typing text-yellow-500 block mt-1 md:mt-2 text-center"></span>
-            </svelte:component>
-        {:else}
-            <span class="text-yellow-500 block mt-1 md:mt-2 text-center">{subjectNames[0] || 'STEM'}...</span>
-        {/if}
-    </h1>
+        <h1 class="text-4xl md:text-6xl font-bold text-blue-900 mb-4">
+            <span class="block">Unlock Your Potential in</span>
+            <span id="subjects" class="typing text-yellow-500 block mt-1 md:mt-2 text-center"></span>
+        </h1>
     <p class="max-w-2xl mx-auto text-lg text-gray-700 mb-8">
         Welcome to RS3! I'm Rishi Soni, offering dedicated, free one-on-one and small group tutoring in key STEM subjects to help you excel academically. Let's tackle challenging concepts together.
     </p>
@@ -119,3 +110,9 @@
     </p>
     <Button href="/signup" label="Sign Up for Free Tutoring" variant="primary" />
 </section>
+
+<style>
+    :global(.typed-element) {
+        display: block;
+    }
+</style>

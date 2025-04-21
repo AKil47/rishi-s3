@@ -24,6 +24,7 @@
 		"vite": "^6.2.5"
 	},
 	"dependencies": {
-		"svelte-typed-js": "^1.0.3"
+		"svelte-typed-js": "^1.0.3",
+		"typed.js": "^2.1.0"
 	}
 }
